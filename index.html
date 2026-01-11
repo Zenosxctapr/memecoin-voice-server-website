@@ -1,519 +1,638 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Echo - Voice Chat for Axiom Traders</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Echo - Voice Chat for Crypto Traders</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    :root {
-      --accent-blue: #1d9bf0;
-      --accent-blue-hover: #1a8cd8;
-    }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            color: #e8e8e8;
+            overflow-x: hidden;
+            background: #0a0a0f;
+        }
 
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #000;
-      color: #fff;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
+        /* Subtle animated background */
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0a0a0f 0%, #0f120e 25%, #12181a 50%, #0e1410 75%, #0a0a0f 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+        }
 
-    /* Header */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
+        /* Subtle moving orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0;
+            animation: fadeFloat 15s ease-in-out infinite;
+        }
 
-    nav {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1.25rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #6dd16d 0%, transparent 70%);
+            top: -15%;
+            left: -10%;
+            animation-delay: 0s;
+        }
 
-    /* X icon in top-right corner */
-    .x-link {
-      position: fixed;
-      top: 1.5rem;
-      right: 2rem;
-      z-index: 1001;
-      color: rgba(255, 255, 255, 0.7);
-      transition: color 0.2s;
-      display: flex;
-      align-items: center;
-      text-decoration: none;
-    }
+        .orb-2 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #8fd88f 0%, transparent 70%);
+            bottom: -20%;
+            right: -15%;
+            animation-delay: 5s;
+        }
 
-    .x-link:hover {
-      color: var(--accent-blue);
-    }
+        .orb-3 {
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, #75d175 0%, transparent 70%);
+            top: 40%;
+            right: 20%;
+            animation-delay: 10s;
+        }
 
-    .x-link svg {
-      width: 22px;
-      height: 22px;
-    }
+        /* Additional subtle light spots */
+        .light-spot {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0;
+            animation: gentlePulse 12s ease-in-out infinite;
+        }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: #fff;
-      text-decoration: none;
-    }
+        .light-spot-1 {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(109, 209, 109, 0.3) 0%, transparent 70%);
+            top: 15%;
+            left: 25%;
+            animation-delay: 2s;
+        }
 
-    .logo-image {
-      width: 40px;
-      height: 40px;
-      object-fit: contain;
-    }
+        .light-spot-2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(143, 216, 143, 0.25) 0%, transparent 70%);
+            top: 55%;
+            left: 10%;
+            animation-delay: 6s;
+        }
 
-    .logo svg {
-      width: 28px;
-      height: 28px;
-    }
+        .light-spot-3 {
+            width: 380px;
+            height: 380px;
+            background: radial-gradient(circle, rgba(117, 209, 117, 0.28) 0%, transparent 70%);
+            bottom: 25%;
+            left: 45%;
+            animation-delay: 9s;
+        }
 
-    /* Hero */
-    .hero {
-      min-height: 80vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 6rem 2rem 3rem;
-    }
+        .light-spot-4 {
+            width: 420px;
+            height: 420px;
+            background: radial-gradient(circle, rgba(109, 209, 109, 0.26) 0%, transparent 70%);
+            top: 70%;
+            right: 30%;
+            animation-delay: 4s;
+        }
 
-    .hero-content {
-      max-width: 700px;
-    }
+        .light-spot-5 {
+            width: 360px;
+            height: 360px;
+            background: radial-gradient(circle, rgba(143, 216, 143, 0.24) 0%, transparent 70%);
+            top: 30%;
+            right: 15%;
+            animation-delay: 7s;
+        }
 
-    /* Video Showcase */
-    .video-showcase {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 2rem 2rem 4rem;
-    }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
-    .video-container {
-      text-align: center;
-    }
+        @keyframes fadeFloat {
+            0%, 100% { 
+                opacity: 0;
+                transform: translate(0, 0) scale(1);
+            }
+            25% {
+                opacity: 0.2;
+                transform: translate(20px, -25px) scale(1.03);
+            }
+            50% { 
+                opacity: 0.3;
+                transform: translate(30px, -40px) scale(1.05);
+            }
+            75% {
+                opacity: 0.18;
+                transform: translate(15px, -20px) scale(1.02);
+            }
+        }
 
-    .video-title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 2rem;
-      letter-spacing: -0.02em;
-    }
+        @keyframes gentlePulse {
+            0%, 100% { 
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            15% {
+                opacity: 0.25;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 0.35;
+                transform: scale(1.05);
+            }
+            85% {
+                opacity: 0.22;
+                transform: scale(1);
+            }
+        }
+        }
 
-    .video-wrapper {
-      position: relative;
-      width: 100%;
-      padding-bottom: 56.25%; /* 16:9 aspect ratio */
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      overflow: hidden;
-      transition: all 0.3s;
-    }
+        /* Content */
+        .container {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-    .video-wrapper:hover {
-      border-color: rgba(29, 155, 240, 0.5);
-      box-shadow: 0 8px 32px rgba(29, 155, 240, 0.2);
-    }
+        /* Header */
+        header {
+            padding: 24px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-    .video-wrapper iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
 
-    h1 {
-      font-size: 3.5rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      margin-bottom: 1rem;
-      line-height: 1.1;
-    }
+        .logo-image {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+        }
 
-    .subtitle {
-      font-size: 1.25rem;
-      color: rgba(255, 255, 255, 0.7);
-      margin-bottom: 2rem;
-      font-weight: 400;
-    }
+        .logo-text {
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            color: #e8e8e8;
+        }
 
-    .cta-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
+        .social-links {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
 
-    .btn {
-      padding: 1rem 2rem;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: all 0.2s;
-      border: none;
-    }
+        .x-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(109, 209, 109, 0.08);
+            border: 1px solid rgba(109, 209, 109, 0.2);
+            border-radius: 8px;
+            color: #9dd99d;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
 
-    .btn-primary {
-      background: var(--accent-blue);
-      color: #fff;
-    }
+        .x-button:hover {
+            background: rgba(109, 209, 109, 0.12);
+            border-color: rgba(109, 209, 109, 0.35);
+            transform: translateY(-1px);
+        }
 
-    .btn-primary:hover {
-      background: var(--accent-blue-hover);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 20px rgba(29, 155, 240, 0.4);
-    }
+        .x-button svg {
+            width: 16px;
+            height: 16px;
+        }
 
-    .btn-secondary {
-      background: transparent;
-      color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
+        /* Hero section */
+        .hero {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 48px 24px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
 
-    .btn-secondary:hover {
-      border-color: var(--accent-blue);
-      background: rgba(29, 155, 240, 0.1);
-    }
+        h1 {
+            font-size: 68px;
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            margin-bottom: 24px;
+            color: #ffffff;
+        }
 
-    /* Features */
-    .features {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 4rem 2rem;
-    }
+        .subtitle {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+            margin-bottom: 48px;
+            max-width: 650px;
+            font-weight: 400;
+        }
 
-    .section-title {
-      text-align: center;
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 3rem;
-      letter-spacing: -0.02em;
-    }
+        /* Buttons */
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
 
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-    }
+        .btn {
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
 
-    .feature-card {
-      padding: 2rem;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      transition: all 0.3s;
-    }
+        .btn-primary {
+            background: rgba(109, 209, 109, 0.15);
+            color: #b8e5b8;
+            border: 1px solid rgba(109, 209, 109, 0.3);
+        }
 
-    .feature-card:hover {
-      background: rgba(29, 155, 240, 0.05);
-      border-color: rgba(29, 155, 240, 0.3);
-      transform: translateY(-4px);
-    }
+        .btn-primary:hover {
+            background: rgba(109, 209, 109, 0.22);
+            border-color: rgba(109, 209, 109, 0.45);
+            transform: translateY(-2px);
+        }
 
-    .feature-icon {
-      width: 48px;
-      height: 48px;
-      background: rgba(29, 155, 240, 0.15);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1.25rem;
-      font-size: 1.5rem;
-    }
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
 
-    .feature-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-    }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.85);
+            transform: translateY(-2px);
+        }
 
-    .feature-description {
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
+        /* Demo video section */
+        .demo-section {
+            padding: 96px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
 
-    /* How it works */
-    .how-it-works {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 4rem 2rem;
-      text-align: center;
-    }
+        .demo-section h2 {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 48px;
+            letter-spacing: -0.5px;
+            color: #ffffff;
+        }
 
-    .steps {
-      display: flex;
-      flex-direction: column;
-      gap: 2.5rem;
-      margin-top: 3rem;
-    }
+        .video-container {
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            aspect-ratio: 16 / 9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    .step {
-      display: flex;
-      align-items: flex-start;
-      gap: 1.5rem;
-      text-align: left;
-    }
+        .video-placeholder {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 400;
+        }
 
-    .step-number {
-      flex-shrink: 0;
-      width: 48px;
-      height: 48px;
-      background: rgba(29, 155, 240, 0.15);
-      border: 1px solid rgba(29, 155, 240, 0.3);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 1.25rem;
-      color: var(--accent-blue);
-    }
+        /* Features */
+        .features {
+            padding: 96px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-    .step-content h3 {
-      font-size: 1.25rem;
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-    }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 48px;
+        }
 
-    .step-content p {
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 0.95rem;
-    }
+        .feature-card {
+            padding: 28px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
 
-    /* Footer */
-    footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 3rem 2rem;
-      text-align: center;
-    }
+        .feature-card:hover {
+            background: rgba(109, 209, 109, 0.03);
+            border-color: rgba(109, 209, 109, 0.15);
+            transform: translateY(-2px);
+        }
 
-    .footer-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 2rem;
-    }
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 14px;
+            opacity: 0.9;
+        }
 
-    .footer-logo {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-weight: 600;
-      font-size: 1.1rem;
-    }
+        .feature-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #e8e8e8;
+        }
 
-    .footer-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.6;
+            font-size: 14px;
+        }
 
-    .footer-links a {
-      color: rgba(255, 255, 255, 0.6);
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: color 0.2s;
-    }
+        /* Footer */
+        footer {
+            padding: 64px 24px 32px;
+            text-align: center;
+        }
 
-    .footer-links a:hover {
-      color: var(--accent-blue);
-    }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-    .copyright {
-      width: 100%;
-      margin-top: 2rem;
-      color: rgba(255, 255, 255, 0.4);
-      font-size: 0.85rem;
-    }
+        .footer-cta {
+            margin-bottom: 64px;
+        }
 
-    /* Responsive */
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2.5rem;
-      }
+        .footer-cta h3 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
 
-      .subtitle {
-        font-size: 1.1rem;
-      }
+        .footer-cta p {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 32px;
+        }
 
-      .section-title {
-        font-size: 2rem;
-      }
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
 
-      .features-grid {
-        grid-template-columns: 1fr;
-      }
+        .copyright {
+            color: rgba(255, 255, 255, 0.35);
+            font-size: 13px;
+            font-weight: 400;
+        }
 
-      .footer-content {
-        flex-direction: column;
-        text-align: center;
-      }
+        .footer-social {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
 
-      nav {
-        flex-direction: column;
-        gap: 1rem;
-      }
-    }
-  </style>
+        .footer-x-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .footer-x-link:hover {
+            color: #9dd99d;
+        }
+
+        .footer-x-link svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 42px;
+            }
+
+            .subtitle {
+                font-size: 17px;
+            }
+
+            header {
+                padding: 20px 24px;
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .logo-text {
+                font-size: 20px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .footer-cta h3 {
+                font-size: 24px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <!-- X icon in top-right -->
-  <a href="https://x.com/TrenchEcho" target="_blank" class="x-link" title="Follow on X">
-    <svg viewBox="0 0 24 24" fill="currentColor">
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-    </svg>
-  </a>
+    <!-- Animated background -->
+    <div class="animated-background"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="light-spot light-spot-1"></div>
+    <div class="light-spot light-spot-2"></div>
+    <div class="light-spot light-spot-3"></div>
+    <div class="light-spot light-spot-4"></div>
+    <div class="light-spot light-spot-5"></div>
 
-  <!-- Header -->
-  <header>
-    <nav>
-      <a href="#" class="logo">
-        <!-- Replace logo.png with your logo file -->
-        <img src="logo.png" alt="Echo Logo" class="logo-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-        <svg style="display: none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 2a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
-          <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-        </svg>
-        Echo
-      </a>
-    </nav>
-  </header>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo-section">
+                <img src="data:image/png;base64,UklGRiADAABXRUJQVlA4WAoAAAAgAAAAJAAAKwAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggMgEAANAIAJ0BKiUALAA+USCPRKOiIZVargA4BQS0gAZ177lGALeh50f9h5Tfn30T/8dwEH6SnqsOVjy7KJ/R+v1ywY7nq3w4tYiF8xh6zecXgAAA/v+dErJPfG5/NVsKFtcHBo/954f/g8//r8fCZVm/N3562DSv/5BD3P13B6iEPMBy3/CAc1+skNxu1wO+bf1vE/Q9prv5HLhurC1wa+53UsxKy+U2JKFNWlmavm3J9nd/Yr8Gkpz7Gysc+PB1zDUrHvN2n2vp3HY3vqpXqT6ocRLXXUSOyLqEEO3aYOffAeMTTHJ2KXx9VMLhohHFhjyHMmwHFd2w2Ln/GirBQMEuHzUYWK1aq+W/IrcXBQTk7rrDZEgZIXZd/UOC75+ZaofmrOgKH7FXPRzDczD5AMJFuAAAAA==" alt="Echo Logo" class="logo-image">
+                <span class="logo-text">Echo</span>
+            </div>
+            <div class="social-links">
+                <a href="https://x.com/TrenchEcho" class="x-button" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                    @TrenchEcho
+                </a>
+            </div>
+        </header>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Echo</h1>
-      <p class="subtitle">Real-time voice communication for Axiom traders. Join token-specific rooms and coordinate with other traders instantly.</p>
-      <div class="cta-buttons">
-        <a href="#" class="btn btn-primary">Download Extension</a>
-        <a href="https://x.com/TrenchEcho" target="_blank" class="btn btn-secondary">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-          </svg>
-          Follow Updates
-        </a>
-      </div>
+        <!-- Hero -->
+        <section class="hero">
+            <h1>Echo</h1>
+            <p class="subtitle">
+                Real-time voice communication for crypto traders. Join token-specific rooms and coordinate with other traders instantly.
+            </p>
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-primary">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Download Extension
+                </a>
+                <a href="https://x.com/TrenchEcho" class="btn btn-secondary" target="_blank">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                    Follow Updates
+                </a>
+            </div>
+        </section>
+
+        <!-- Demo video -->
+        <section class="demo-section">
+            <h2>See it in action.</h2>
+            <div class="video-container">
+                <p class="video-placeholder">Demo video coming soon</p>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="features">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Token-Specific Rooms</h3>
+                    <p>Automatically join voice rooms based on the token you're viewing. No manual setup required.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Guest Mode</h3>
+                    <p>Jump in instantly as a guest. No account required, no personal info collected.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Push-to-Talk</h3>
+                    <p>Hold Space to talk. Simple, fast, and prevents background noise from interrupting.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>P2P Voice</h3>
+                    <p>Direct peer-to-peer connections for low latency. Your voice is never stored on servers.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Minimize Mode</h3>
+                    <p>Shrink to a floating avatar that pulses when you speak. Stay connected without distraction.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Supported Sites</h3>
+                    <p>Currently available on Axiom.trade. DexScreener and GMGN support coming soon.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-cta">
+                    <h3>Ready to get started?</h3>
+                    <p>Join traders using Echo on Axiom today.</p>
+                    <a href="#" class="btn btn-primary">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Download Extension
+                    </a>
+                </div>
+                <div class="footer-bottom">
+                    <p class="copyright">© 2026 Echo. All rights reserved.</p>
+                    <div class="footer-social">
+                        <a href="https://x.com/TrenchEcho" class="footer-x-link" target="_blank">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                            @TrenchEcho
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
-  </section>
-
-  <!-- Video Showcase -->
-  <section class="video-showcase">
-    <div class="video-container">
-      <h2 class="video-title">See it in action.</h2>
-      <div class="video-wrapper">
-        <!-- Replace VIDEO_ID with your YouTube video ID -->
-        <iframe 
-          src="https://www.youtube.com/embed/VIDEO_ID" 
-          title="Echo Voice Chat Demo" 
-          frameborder="0" 
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-          allowfullscreen>
-        </iframe>
-      </div>
-    </div>
-  </section>
-
-  <!-- Features -->
-  <section class="features">
-    <h2 class="section-title">Built for traders.</h2>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon">🎯</div>
-        <h3 class="feature-title">Token-Based Rooms</h3>
-        <p class="feature-description">Automatic voice rooms for each token on Axiom. Talk with other traders looking at the same chart.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">⚡</div>
-        <h3 class="feature-title">Push-to-Talk</h3>
-        <p class="feature-description">Clean audio with space bar PTT. No background noise, no interruptions.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🔒</div>
-        <h3 class="feature-title">Private & Secure</h3>
-        <p class="feature-description">Peer-to-peer WebRTC connections. Your conversations stay between traders in the room.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- How it Works -->
-  <section class="how-it-works">
-    <h2 class="section-title">How it works.</h2>
-    <div class="steps">
-      <div class="step">
-        <div class="step-number">1</div>
-        <div class="step-content">
-          <h3>Install the extension</h3>
-          <p>Add Echo to Chrome and grant microphone permissions.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-number">2</div>
-        <div class="step-content">
-          <h3>Navigate to a token</h3>
-          <p>Go to any token page on Axiom. Echo automatically creates a room for that token.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-number">3</div>
-        <div class="step-content">
-          <h3>Join the conversation</h3>
-          <p>Click the microphone button, hold space to talk. See who else is in the room and coordinate your trades.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="footer-content">
-      <div class="footer-logo">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 2a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
-          <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-        </svg>
-        Echo
-      </div>
-      <ul class="footer-links">
-        <li><a href="https://x.com/TrenchEcho" target="_blank">Twitter</a></li>
-        <li><a href="#">Chrome Web Store</a></li>
-      </ul>
-      <p class="copyright">© 2026 Echo. All rights reserved.</p>
-    </div>
-  </footer>
-</body> 
+</body>
 </html>
+
