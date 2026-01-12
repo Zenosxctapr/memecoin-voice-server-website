@@ -15,7 +15,7 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             color: #e8e8e8;
             overflow-x: hidden;
-            background: #0a0a0f;
+            background: #0a0a0a;
         }
 
         /* Subtle animated background */
@@ -26,12 +26,12 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: linear-gradient(135deg, #0a0a0f 0%, #0f120e 25%, #12181a 50%, #0e1410 75%, #0a0a0f 100%);
+            background: linear-gradient(135deg, #0a0a0a 0%, #0f0f0f 25%, #121212 50%, #0e0e0e 75%, #0a0a0a 100%);
             background-size: 400% 400%;
             animation: gradientShift 20s ease infinite;
         }
 
-        /* Subtle moving orbs */
+        /* Subtle moving orbs - changed to white/gray */
         .orb {
             position: absolute;
             border-radius: 50%;
@@ -43,7 +43,7 @@
         .orb-1 {
             width: 500px;
             height: 500px;
-            background: radial-gradient(circle, #6dd16d 0%, transparent 70%);
+            background: radial-gradient(circle, #ffffff 0%, transparent 70%);
             top: -15%;
             left: -10%;
             animation-delay: 0s;
@@ -52,7 +52,7 @@
         .orb-2 {
             width: 600px;
             height: 600px;
-            background: radial-gradient(circle, #8fd88f 0%, transparent 70%);
+            background: radial-gradient(circle, #f5f5f5 0%, transparent 70%);
             bottom: -20%;
             right: -15%;
             animation-delay: 5s;
@@ -61,13 +61,13 @@
         .orb-3 {
             width: 450px;
             height: 450px;
-            background: radial-gradient(circle, #75d175 0%, transparent 70%);
+            background: radial-gradient(circle, #e8e8e8 0%, transparent 70%);
             top: 40%;
             right: 20%;
             animation-delay: 10s;
         }
 
-        /* Additional subtle light spots */
+        /* Additional subtle light spots - changed to white/gray */
         .light-spot {
             position: absolute;
             border-radius: 50%;
@@ -79,7 +79,7 @@
         .light-spot-1 {
             width: 350px;
             height: 350px;
-            background: radial-gradient(circle, rgba(109, 209, 109, 0.3) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
             top: 15%;
             left: 25%;
             animation-delay: 2s;
@@ -88,7 +88,7 @@
         .light-spot-2 {
             width: 400px;
             height: 400px;
-            background: radial-gradient(circle, rgba(143, 216, 143, 0.25) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(245, 245, 245, 0.25) 0%, transparent 70%);
             top: 55%;
             left: 10%;
             animation-delay: 6s;
@@ -97,7 +97,7 @@
         .light-spot-3 {
             width: 380px;
             height: 380px;
-            background: radial-gradient(circle, rgba(117, 209, 117, 0.28) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(232, 232, 232, 0.28) 0%, transparent 70%);
             bottom: 25%;
             left: 45%;
             animation-delay: 9s;
@@ -106,7 +106,7 @@
         .light-spot-4 {
             width: 420px;
             height: 420px;
-            background: radial-gradient(circle, rgba(109, 209, 109, 0.26) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.26) 0%, transparent 70%);
             top: 70%;
             right: 30%;
             animation-delay: 4s;
@@ -115,7 +115,7 @@
         .light-spot-5 {
             width: 360px;
             height: 360px;
-            background: radial-gradient(circle, rgba(143, 216, 143, 0.24) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(240, 240, 240, 0.24) 0%, transparent 70%);
             top: 30%;
             right: 15%;
             animation-delay: 7s;
@@ -164,7 +164,6 @@
                 transform: scale(1);
             }
         }
-        }
 
         /* Content */
         .container {
@@ -192,7 +191,6 @@
         .logo-image {
             width: 44px;
             height: 44px;
-            border-radius: 50%;
         }
 
         .logo-text {
@@ -213,10 +211,10 @@
             align-items: center;
             gap: 8px;
             padding: 10px 20px;
-            background: rgba(109, 209, 109, 0.08);
-            border: 1px solid rgba(109, 209, 109, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 8px;
-            color: #9dd99d;
+            color: #e8e8e8;
             text-decoration: none;
             font-weight: 500;
             font-size: 14px;
@@ -224,8 +222,8 @@
         }
 
         .x-button:hover {
-            background: rgba(109, 209, 109, 0.12);
-            border-color: rgba(109, 209, 109, 0.35);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.35);
             transform: translateY(-1px);
         }
 
@@ -287,14 +285,14 @@
         }
 
         .btn-primary {
-            background: rgba(109, 209, 109, 0.15);
-            color: #b8e5b8;
-            border: 1px solid rgba(109, 209, 109, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .btn-primary:hover {
-            background: rgba(109, 209, 109, 0.22);
-            border-color: rgba(109, 209, 109, 0.45);
+            background: rgba(255, 255, 255, 0.22);
+            border-color: rgba(255, 255, 255, 0.45);
             transform: translateY(-2px);
         }
 
@@ -367,8 +365,8 @@
         }
 
         .feature-card:hover {
-            background: rgba(109, 209, 109, 0.03);
-            border-color: rgba(109, 209, 109, 0.15);
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.15);
             transform: translateY(-2px);
         }
 
@@ -452,7 +450,7 @@
         }
 
         .footer-x-link:hover {
-            color: #9dd99d;
+            color: #e8e8e8;
         }
 
         .footer-x-link svg {
@@ -518,16 +516,11 @@
         <!-- Header -->
         <header>
             <div class="logo-section">
-                <img src="data:image/png;base64,UklGRiADAABXRUJQVlA4WAoAAAAgAAAAJAAAKwAASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggMgEAANAIAJ0BKiUALAA+USCPRKOiIZVargA4BQS0gAZ177lGALeh50f9h5Tfn30T/8dwEH6SnqsOVjy7KJ/R+v1ywY7nq3w4tYiF8xh6zecXgAAA/v+dErJPfG5/NVsKFtcHBo/954f/g8//r8fCZVm/N3562DSv/5BD3P13B6iEPMBy3/CAc1+skNxu1wO+bf1vE/Q9prv5HLhurC1wa+53UsxKy+U2JKFNWlmavm3J9nd/Yr8Gkpz7Gysc+PB1zDUrHvN2n2vp3HY3vqpXqT6ocRLXXUSOyLqEEO3aYOffAeMTTHJ2KXx9VMLhohHFhjyHMmwHFd2w2Ln/GirBQMEuHzUYWK1aq+W/IrcXBQTk7rrDZEgZIXZd/UOC75+ZaofmrOgKH7FXPRzDczD5AMJFuAAAAA==" alt="Echo Logo" class="logo-image">
+                <img src="logo.png" alt="Echo Logo" class="logo-image">
                 <span class="logo-text">Echo</span>
             </div>
             <div class="social-links">
-                <a href="https://x.com/TrenchEcho" class="x-button" target="_blank">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                    </svg>
-                    @TrenchEcho
-                </a>
+                <!-- X button removed -->
             </div>
         </header>
 
@@ -559,7 +552,11 @@
         <section class="demo-section">
             <h2>See it in action.</h2>
             <div class="video-container">
-                <p class="video-placeholder">Demo video coming soon</p>
+                <video controls width="100%" style="border-radius: 12px;">
+                    <source src="demo-video.mp4" type="video/mp4">
+                    <source src="demo-video.webm" type="video/webm">
+                    Your browser does not support the video tag.
+                </video>
             </div>
         </section>
 
@@ -635,4 +632,3 @@
     </div>
 </body>
 </html>
-
