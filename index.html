@@ -348,6 +348,43 @@
             font-weight: 400;
         }
 
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .play-button-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .video-wrapper:hover .play-button-overlay {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translate(-50%, -50%) scale(1.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .play-icon {
+            width: 32px;
+            height: 32px;
+            margin-left: 4px;
+        }
+
         /* Features */
         .features {
             padding: 96px 24px;
@@ -558,11 +595,18 @@
         <section class="demo-section">
             <h2>See it in action.</h2>
             <div class="video-container">
-                <video controls width="100%" style="border-radius: 12px;" poster="video-thumbnail.png">
-                    <source src="demo-video.webm" type="video/webm">
-                    <source src="demo-video.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
+                <div class="video-wrapper">
+                    <video controls width="100%" style="border-radius: 12px;" poster="video-thumbnail.png">
+                        <source src="demo-video.webm" type="video/webm">
+                        <source src="demo-video.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="play-button-overlay">
+                        <svg class="play-icon" viewBox="0 0 24 24" fill="white">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -636,5 +680,30 @@
             </div>
         </footer>
     </div>
+
+    <script>
+        // Hide play button overlay when video starts playing
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.querySelector('.video-wrapper video');
+            const playOverlay = document.querySelector('.play-button-overlay');
+            
+            if (video && playOverlay) {
+                video.addEventListener('play', function() {
+                    playOverlay.style.opacity = '0';
+                    playOverlay.style.transition = 'opacity 0.3s ease';
+                });
+                
+                video.addEventListener('pause', function() {
+                    if (video.currentTime < video.duration) {
+                        playOverlay.style.opacity = '1';
+                    }
+                });
+                
+                video.addEventListener('ended', function() {
+                    playOverlay.style.opacity = '1';
+                });
+            }
+        });
+    </script>
 </body>
 </html>
